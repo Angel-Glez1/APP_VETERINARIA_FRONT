@@ -10,7 +10,7 @@ import useAuth from "../hook/useAuth";
 
 const Login = () => {
 
-    const { setAuth } = useAuth();
+    const { login } = useAuth();
     const navigate = useNavigate();
 
     const submit = async (email, password) => {
@@ -19,10 +19,10 @@ const Login = () => {
         try {
 
             const { data } = await clienteAxios.post('/auth/login', { email, password });
-            localStorage.setItem('token', data.token);
-            setAuth(data.user);
+            const { user, token } = data;
             
-            navigate('/admin');
+            login({ user, token });
+            navigate('/admin', { replace: true });
 
         } catch (error) {
 

@@ -5,31 +5,20 @@ import useAuth from "../hook/useAuth"
 
 const AuthLayout = () => {
 
-    const { auth, loading } = useAuth();
+    const { isAuthenticated } = useAuth();
 
-    if (loading) {
-        return <p>Cargando...</p>
-    }
 
-    console.log(auth._id ? 'Exite' : 'No exite');
+    const result = isAuthenticated ? 'Autentificado' : 'No Autentificado';
+    console.log({ result, isAuthenticated });
+
     return (
         <>
-            {
-                auth._id ?
-                    (<Navigate to='/admin' />) :
-                    (
-                        <>
-                            <MenuAuth />
+            <MenuAuth />
 
-                            <main className="container mx-auto md:grid md:grid-cols-2 mt-12 px-5 md:px-3 md:gap-12 items-center">
-                                <Outlet />
-                            </main>
-                        </>
-                    )
-            }
+            <main className="container mx-auto md:grid md:grid-cols-2 mt-12 px-5 md:px-3 md:gap-12 items-center">
+                <Outlet />
+            </main>
         </>
-
-
     )
 }
 

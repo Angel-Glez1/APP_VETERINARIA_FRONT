@@ -7,29 +7,23 @@ import useAuth from "../hook/useAuth";
 
 const RutaProtegida = () => {
 
-    const { auth, loading } = useAuth();
+    const { isAuthenticated } = useAuth();
 
-    if (loading) {
-        return <p>Cargando...</p>
-    }
+
+    const result = isAuthenticated ? 'Autentificado bienvanido' : 'No Autentificado fuera';
+    console.log({ result, isAuthenticated });
 
     return (
         <>
-            {
-                auth._id
-                    ? (
-                        <>
-                            <Headers />
-                                <main className="container mx-auto mt-10">
-                                    <Outlet />
-                                </main>
-                            <Footer />
-                        </>
+        
 
-                    )
-                    : (<Navigate to={'/'} />)
-            }
+            <Headers />
 
+            <main className="container mx-auto mt-10">
+                <Outlet />
+            </main>
+
+            <Footer />
         </>
     )
 }
