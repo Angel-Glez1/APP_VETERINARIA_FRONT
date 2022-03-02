@@ -9,13 +9,13 @@ const useAuth = () => {
 
 
     const login = ({ token, user }) => {
-        localStorage.setItem('token', token);
+        localStorage.setItem('token_veterinaria', token);
         dispatch({ type: 'LOGIN', payload: user })
     };
 
 
     const logout = () => {
-        localStorage.removeItem('token');
+        localStorage.removeItem('token_veterinaria');
         dispatch({ type: 'LOGOUT' })
     }
 

@@ -1,4 +1,5 @@
 import usePacientes from '../../hook/usePacientes';
+import Paciente from './Paciente';
 
 
 
@@ -10,13 +11,21 @@ const ListadoPacientes = () => {
     return (
         <>
             {
-                pacientes.length === 0
-                    ? (<p>No hay pacientes</p>)
-                    : (
+                pacientes.length > 0 ?
+                    (
                         <>
-                            <p>{JSON.stringify(pacientes)}</p>
+                            <h2 className="font-black text-3xl text-center ">Listado Paciente</h2>
+                            {
+                                pacientes.map(paciente => ((
+                                    <Paciente key={paciente._id} paciente={paciente} />
+                                )))
+                            }
                         </>
-                    )
+
+
+                    ) :
+                    (<h1>No hay pacientes</h1>)
+
             }
         </>
     )

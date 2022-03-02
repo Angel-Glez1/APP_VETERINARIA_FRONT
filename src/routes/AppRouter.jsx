@@ -19,8 +19,9 @@ const AppRouter = () => {
         const autenticarUsuario = async () => {
 
             console.log('Revisando Auntentificacion...');
-            const token = localStorage.getItem('token') || '';
+            const token = localStorage.getItem('token_veterinaria') || '';
 
+            localStorage.getItem('token_veterinaria')
             if (!token) {
                 setLoading(false);
                 logout();

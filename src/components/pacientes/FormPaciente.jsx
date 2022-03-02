@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import usePacientes from "../../hook/usePacientes";
 
 
@@ -6,14 +6,29 @@ import usePacientes from "../../hook/usePacientes";
 const FormPaciente = () => {
 
     // Custom Hook
-    const { guardarPaciente } = usePacientes();
+    const { guardarPaciente, paciente } = usePacientes();
 
     // State the component
-    const [nombre, setNombre] = useState('Juan');
-    const [propietario, setPropietario] = useState('Hook');
-    const [email, setEmail] = useState('correo@correo.com');
-    const [fecha, setFecha] = useState('2011-11-11');
-    const [sintomas, setSintomas] = useState('Sus ojos estan rojos');
+    const [nombre, setNombre] = useState('');
+    const [propietario, setPropietario] = useState('');
+    const [email, setEmail] = useState('');
+    const [fecha, setFecha] = useState('');
+    const [sintomas, setSintomas] = useState('');
+    const [id, setId] = useState(null);
+
+    useEffect(() => {
+
+        if (paciente?.nombre) {
+            const { email, fecha, nombre, propietario, sintomas, _id } = paciente;
+            setNombre(nombre)
+            setPropietario(propietario)
+            setEmail(email)
+            setFecha(new Date(fecha).toISOString().slice(0, 10))
+            setSintomas(sintomas)
+            setId(_id);
+        }
+
+    }, [paciente]);
 
 
     const handleSubmit = (e) => {
@@ -23,7 +38,14 @@ const FormPaciente = () => {
             console.log('Todos los campos son obligatorios');
         }
 
-        guardarPaciente({ nombre, propietario, email, fecha, sintomas });
+        guardarPaciente({ nombre, propietario, email, fecha, sintomas, id });
+
+        setNombre('')
+        setPropietario('')
+        setEmail('')
+        setFecha('')
+        setSintomas('')
+        setId(null);
     }
 
     return (
@@ -114,7 +136,7 @@ const FormPaciente = () => {
                 <div className="mt-5 mb-5">
                     <input
                         type="submit"
-                        value={'Enviar'}
+                        value={id ? 'Editar' : 'Guardar'}
                         className="font-bold p-2 text-center 
                         uppercase bg-pink-300 text-pink-600 w-full rounded-sm
                         hover:cursor-pointer hover:bg-pink-200
